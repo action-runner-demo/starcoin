@@ -6,15 +6,6 @@ metadata:
 spec:
   template:
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-pool
-                    operator: In
-                    values:
-                      - ci-pool-200g
       nodeSelector:
         node-pool: ci-pool-200g
       image: ghcr.io/starcoinorg/starcoin-builder:latest
@@ -25,6 +16,15 @@ spec:
           operator: "Equal"
           value: "ci"
           effect: "NoExecute"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-pool
+                    operator: In
+                    values:
+                      - ci-pool-200g
       serviceAccountName: github-runner
       resources:
         requests:
