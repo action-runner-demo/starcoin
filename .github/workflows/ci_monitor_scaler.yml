@@ -1,6 +1,7 @@
 name: Monitor CI Scaler
 
 on:
+  # this unused
   # workflow_dispatch:
   schedule:
     - cron: '0 5,17 * * *'
