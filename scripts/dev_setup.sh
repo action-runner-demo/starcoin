@@ -935,9 +935,10 @@ if [[ "$INSTALL_BUILD_TOOLS" == "true" ]]; then
   # Add all the components that we need
   rustup component add rustfmt
   rustup component add clippy
+  source "$HOME/.cargo/env"
 
-  install_cargo_guppy
-  install_sccache
+  #install_cargo_guppy
+  #install_sccache
   install_grcov
   install_pkg git "$PACKAGE_MANAGER"
   install_lcov "$PACKAGE_MANAGER"

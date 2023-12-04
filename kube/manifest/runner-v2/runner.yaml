@@ -1,0 +1,42 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: starcoin-runner-deployment
+  namespace: actions-runner-system
+spec:
+  template:
+    spec:
+      nodeSelector:
+        node-pool: ci-pool-200g
+      image: ghcr.io/starcoinorg/starcoin-builder:latest
+      repository: action-runner-demo/starcoin
+      ephemeral: true
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "ci"
+          effect: "NoExecute"
+      serviceAccountName: github-runner
+
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: starcoin-runner-deployment-autoscaler
+  namespace: actions-runner-system
+spec:
+  scaleTargetRef:
+    name: starcoin-runner-deployment
+  minReplicas: 1
+  maxReplicas: 2
+  scaleDownDelaySecondsAfterScaleOut: 120
+  scaleUpTriggers:
+  - githubEvent:
+      pullRequest:
+        types: ["synchronize"]
+        branches: ["master"]
+      checkRun:
+        types: ["created"]
+        status: "queued"
+    amount: 3
+    duration: "2m"
