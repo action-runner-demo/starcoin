@@ -936,11 +936,12 @@ if [[ "$INSTALL_BUILD_TOOLS" == "true" ]]; then
   rustup component add rustfmt
   rustup component add clippy
 
-  install_cargo_guppy
+  #install_cargo_guppy
   install_sccache
   install_grcov
   install_pkg git "$PACKAGE_MANAGER"
   install_lcov "$PACKAGE_MANAGER"
+  source "$HOME/.cargo/env"
   #install_nodejs "$PACKAGE_MANAGER"
 fi
 
