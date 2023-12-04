@@ -16,7 +16,7 @@ jobs:
         with:
           submodules: recursive
       - name: install rust
-        run: bash ./scripts/dev_setup.sh -t -y
+        run: bash ./scripts/dev_setup.sh -b -t
       - name: run fmt check
         uses: actions-rs/cargo@v1
         with:
